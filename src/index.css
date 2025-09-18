@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* AI Traffic Control Dashboard Design System
+All colors MUST be HSL. Professional control center theme with electric accents.
+*/
+
+@layer base {
+  :root {
+    /* Control Center Dark Theme */
+    --background: 215 25% 8%;
+    --foreground: 210 40% 95%;
+
+    --card: 215 25% 12%;
+    --card-foreground: 210 40% 95%;
+
+    --popover: 215 25% 12%;
+    --popover-foreground: 210 40% 95%;
+
+    /* Electric Blue Primary */
+    --primary: 200 100% 60%;
+    --primary-foreground: 215 25% 8%;
+    --primary-glow: 200 100% 70%;
+
+    /* Dashboard Secondary */
+    --secondary: 215 25% 18%;
+    --secondary-foreground: 210 40% 85%;
+
+    --muted: 215 25% 15%;
+    --muted-foreground: 210 20% 65%;
+
+    --accent: 200 100% 55%;
+    --accent-foreground: 215 25% 8%;
+
+    /* Traffic Signal Colors */
+    --traffic-green: 120 100% 50%;
+    --traffic-yellow: 45 100% 55%;
+    --traffic-red: 0 100% 55%;
+
+    /* Alert and Status Colors */
+    --success: 120 60% 50%;
+    --warning: 45 90% 55%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 215 25% 20%;
+    --input: 215 25% 15%;
+    --ring: 200 100% 60%;
+
+    --radius: 0.75rem;
+
+    /* Dashboard Specific Variables */
+    --dashboard-panel: 215 25% 10%;
+    --dashboard-header: 215 25% 14%;
+    --control-active: 120 100% 45%;
+    --control-inactive: 215 15% 25%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(200 100% 60%), hsl(200 100% 70%));
+    --gradient-traffic: linear-gradient(90deg, hsl(120 100% 50%), hsl(45 100% 55%), hsl(0 100% 55%));
+    --gradient-dashboard: linear-gradient(180deg, hsl(215 25% 12%), hsl(215 25% 8%));
+    
+    /* Shadows and Effects */
+    --shadow-glow: 0 0 20px hsl(200 100% 60% / 0.3);
+    --shadow-panel: 0 4px 20px hsl(215 25% 4% / 0.5);
+    --shadow-traffic: 0 0 15px;
+    
+    /* Animation Speeds */
+    --transition-fast: 0.2s ease-out;
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-image: url('/src/assets/dashboard-hero.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: hsl(var(--background) / 0.9);
+    backdrop-filter: blur(1px);
+    z-index: -1;
+  }
+}
