@@ -5,15 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
-import { SimulationState, Intersection } from './Dashboard';
 
-interface ControlPanelProps {
-  simulation: SimulationState;
-  onSimulationChange: (simulation: SimulationState) => void;
-  intersections: Intersection[];
-}
-
-export const ControlPanel: React.FC<ControlPanelProps> = ({
+export const ControlPanel = ({
   simulation,
   onSimulationChange,
   intersections
@@ -38,7 +31,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
     });
   };
 
-  const getScenarioLabel = (scenario: string): string => {
+  const getScenarioLabel = (scenario) => {
     switch (scenario) {
       case 'morning': return 'Morning Peak';
       case 'afternoon': return 'Afternoon Normal';
@@ -105,7 +98,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                 onValueChange={(value) =>
                   onSimulationChange({
                     ...simulation,
-                    scenario: value as 'morning' | 'afternoon' | 'evening' | 'accident',
+                    scenario: value,
                   })
                 }
               >

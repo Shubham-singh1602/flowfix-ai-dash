@@ -7,42 +7,11 @@ import { AlertsPanel } from './AlertsPanel';
 import { DashboardHeader } from './DashboardHeader';
 import { Activity, MapPin, BarChart3, Settings } from 'lucide-react';
 
-export interface Intersection {
-  id: string;
-  name: string;
-  x: number;
-  y: number;
-  vehicleCount: number;
-  averageSpeed: number;
-  signalState: 'red' | 'yellow' | 'green';
-  congestionLevel: 'normal' | 'moderate' | 'heavy';
-  lastUpdated: Date;
-}
-
-export interface TrafficAlert {
-  id: string;
-  type: 'congestion' | 'speed' | 'signal';
-  message: string;
-  intersectionId: string;
-  timestamp: Date;
-  severity: 'low' | 'medium' | 'high';
-}
-
-export interface SimulationState {
-  isRunning: boolean;
-  scenario: 'morning' | 'afternoon' | 'evening' | 'accident';
-  vehicleDensity: number;
-  speedFactor: number;
-  emergencyPriority: boolean;
-  autoMode: boolean;
-  runtime: number;
-}
-
-const Dashboard: React.FC = () => {
-  const [selectedIntersection, setSelectedIntersection] = useState<string | null>(null);
-  const [intersections, setIntersections] = useState<Intersection[]>([]);
-  const [alerts, setAlerts] = useState<TrafficAlert[]>([]);
-  const [simulation, setSimulation] = useState<SimulationState>({
+const Dashboard = () => {
+  const [selectedIntersection, setSelectedIntersection] = useState(null);
+  const [intersections, setIntersections] = useState([]);
+  const [alerts, setAlerts] = useState([]);
+  const [simulation, setSimulation] = useState({
     isRunning: false,
     scenario: 'afternoon',
     vehicleDensity: 50,
@@ -51,11 +20,11 @@ const Dashboard: React.FC = () => {
     autoMode: true,
     runtime: 0,
   });
-  const [trafficData, setTrafficData] = useState<any[]>([]);
+  const [trafficData, setTrafficData] = useState([]);
 
   // Initialize intersections
   useEffect(() => {
-    const initialIntersections: Intersection[] = [
+    const initialIntersections = [
       {
         id: 'int-a',
         name: 'Main St & Oak Ave',
@@ -135,7 +104,7 @@ const Dashboard: React.FC = () => {
           (50 - newVehicleCount * 0.8) * (simulation.speedFactor / 100)
         ));
 
-        const newCongestionLevel: 'normal' | 'moderate' | 'heavy' = 
+        const newCongestionLevel = 
           newVehicleCount < 15 ? 'normal' :
           newVehicleCount < 35 ? 'moderate' : 'heavy';
 
@@ -172,7 +141,7 @@ const Dashboard: React.FC = () => {
     return () => clearInterval(interval);
   }, [simulation.isRunning, simulation.scenario, simulation.vehicleDensity, simulation.speedFactor, simulation.autoMode, intersections]);
 
-  const getScenarioMultiplier = (scenario: string): number => {
+  const getScenarioMultiplier = (scenario) => {
     switch (scenario) {
       case 'morning': return 1.5;
       case 'evening': return 1.8;
@@ -181,7 +150,7 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const getOptimalSignalState = (vehicleCount: number, congestionLevel: string): 'red' | 'yellow' | 'green' => {
+  const getOptimalSignalState = (vehicleCount, congestionLevel) => {
     if (congestionLevel === 'heavy') return 'green';
     if (congestionLevel === 'moderate') return Math.random() > 0.5 ? 'yellow' : 'green';
     return vehicleCount < 10 ? 'green' : 'yellow';
@@ -190,7 +159,7 @@ const Dashboard: React.FC = () => {
   const checkForAlerts = () => {
     intersections.forEach(intersection => {
       if (intersection.congestionLevel === 'heavy' && Math.random() > 0.7) {
-        const newAlert: TrafficAlert = {
+        const newAlert = {
           id: `alert-${Date.now()}-${intersection.id}`,
           type: 'congestion',
           message: `Heavy congestion detected at ${intersection.name}`,
@@ -202,7 +171,7 @@ const Dashboard: React.FC = () => {
       }
 
       if (intersection.averageSpeed < 20 && Math.random() > 0.8) {
-        const newAlert: TrafficAlert = {
+        const newAlert = {
           id: `alert-${Date.now()}-${intersection.id}`,
           type: 'speed',
           message: `Low average speed (${intersection.averageSpeed} km/h) at ${intersection.name}`,

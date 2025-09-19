@@ -1,14 +1,8 @@
 import React from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
 import { TrendingUp, Activity } from 'lucide-react';
-import { Intersection } from './Dashboard';
 
-interface TrafficChartsProps {
-  data: any[];
-  intersections: Intersection[];
-}
-
-export const TrafficCharts: React.FC<TrafficChartsProps> = ({ data, intersections }) => {
+export const TrafficCharts = ({ data, intersections }) => {
   const intersectionData = intersections.map(intersection => ({
     name: intersection.name.split(' & ')[0], // Shortened names for display
     vehicles: intersection.vehicleCount,
@@ -16,12 +10,12 @@ export const TrafficCharts: React.FC<TrafficChartsProps> = ({ data, intersection
     congestionLevel: intersection.congestionLevel,
   }));
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-card border border-border rounded-lg p-3 shadow-panel">
           <p className="text-sm font-medium">{`Time: ${label}`}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry, index) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
               {`${entry.dataKey}: ${entry.value}${entry.dataKey === 'speed' ? ' km/h' : ''}`}
             </p>
@@ -32,7 +26,7 @@ export const TrafficCharts: React.FC<TrafficChartsProps> = ({ data, intersection
     return null;
   };
 
-  const getBarColor = (congestionLevel: string) => {
+  const getBarColor = (congestionLevel) => {
     switch (congestionLevel) {
       case 'heavy': return 'hsl(var(--traffic-red))';
       case 'moderate': return 'hsl(var(--traffic-yellow))';

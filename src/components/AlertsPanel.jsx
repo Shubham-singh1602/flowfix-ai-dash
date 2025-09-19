@@ -1,22 +1,15 @@
 import React from 'react';
 import { AlertTriangle, Clock, X, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { TrafficAlert } from './Dashboard';
 
-interface AlertsPanelProps {
-  alerts: TrafficAlert[];
-  onAlertClick: (alertId: string) => void;
-  onClearAlert: (alertId: string) => void;
-}
-
-export const AlertsPanel: React.FC<AlertsPanelProps> = ({
+export const AlertsPanel = ({
   alerts,
   onAlertClick,
   onClearAlert
 }) => {
   if (alerts.length === 0) return null;
 
-  const getSeverityColor = (severity: string) => {
+  const getSeverityColor = (severity) => {
     switch (severity) {
       case 'high': return 'bg-destructive/10 border-destructive/30 text-destructive';
       case 'medium': return 'bg-warning/10 border-warning/30 text-warning';
@@ -24,7 +17,7 @@ export const AlertsPanel: React.FC<AlertsPanelProps> = ({
     }
   };
 
-  const getSeverityIcon = (severity: string) => {
+  const getSeverityIcon = (severity) => {
     switch (severity) {
       case 'high': return <AlertTriangle className="h-4 w-4" />;
       case 'medium': return <Clock className="h-4 w-4" />;
@@ -32,7 +25,7 @@ export const AlertsPanel: React.FC<AlertsPanelProps> = ({
     }
   };
 
-  const formatTime = (date: Date): string => {
+  const formatTime = (date) => {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 

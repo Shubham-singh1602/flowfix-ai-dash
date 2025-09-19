@@ -1,18 +1,12 @@
 import React from 'react';
 import { Activity, Play, Pause, Timer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { SimulationState } from './Dashboard';
 
-interface DashboardHeaderProps {
-  simulation: SimulationState;
-  onSimulationChange: (simulation: SimulationState) => void;
-}
-
-export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
+export const DashboardHeader = ({
   simulation,
   onSimulationChange
 }) => {
-  const formatRuntime = (seconds: number): string => {
+  const formatRuntime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;

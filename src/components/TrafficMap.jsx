@@ -1,21 +1,13 @@
 import React from 'react';
 import { Car, Navigation } from 'lucide-react';
-import { Intersection } from './Dashboard';
 
-interface TrafficMapProps {
-  intersections: Intersection[];
-  selectedIntersection: string | null;
-  onIntersectionClick: (id: string) => void;
-  isSimulationRunning: boolean;
-}
-
-export const TrafficMap: React.FC<TrafficMapProps> = ({
+export const TrafficMap = ({
   intersections,
   selectedIntersection,
   onIntersectionClick,
   isSimulationRunning
 }) => {
-  const getIntersectionColor = (intersection: Intersection) => {
+  const getIntersectionColor = (intersection) => {
     switch (intersection.congestionLevel) {
       case 'heavy': return 'bg-traffic-red shadow-traffic-red';
       case 'moderate': return 'bg-traffic-yellow shadow-traffic-yellow';
@@ -23,7 +15,7 @@ export const TrafficMap: React.FC<TrafficMapProps> = ({
     }
   };
 
-  const getSignalColor = (signalState: string) => {
+  const getSignalColor = (signalState) => {
     switch (signalState) {
       case 'red': return 'bg-traffic-red';
       case 'yellow': return 'bg-traffic-yellow';

@@ -2,15 +2,8 @@ import React from 'react';
 import { MapPin, Car, Gauge, Clock, ToggleLeft, ToggleRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Intersection } from './Dashboard';
 
-interface IntersectionPanelProps {
-  intersection?: Intersection;
-  onSignalChange: (intersectionId: string, newState: 'red' | 'yellow' | 'green') => void;
-  autoMode: boolean;
-}
-
-export const IntersectionPanel: React.FC<IntersectionPanelProps> = ({
+export const IntersectionPanel = ({
   intersection,
   onSignalChange,
   autoMode
@@ -31,7 +24,7 @@ export const IntersectionPanel: React.FC<IntersectionPanelProps> = ({
     );
   }
 
-  const getSignalColor = (state: string) => {
+  const getSignalColor = (state) => {
     switch (state) {
       case 'red': return 'text-traffic-red';
       case 'yellow': return 'text-traffic-yellow';
@@ -40,7 +33,7 @@ export const IntersectionPanel: React.FC<IntersectionPanelProps> = ({
     }
   };
 
-  const getCongestionColor = (level: string) => {
+  const getCongestionColor = (level) => {
     switch (level) {
       case 'heavy': return 'text-traffic-red bg-traffic-red/10';
       case 'moderate': return 'text-traffic-yellow bg-traffic-yellow/10';
@@ -48,7 +41,7 @@ export const IntersectionPanel: React.FC<IntersectionPanelProps> = ({
     }
   };
 
-  const formatTime = (date: Date): string => {
+  const formatTime = (date) => {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   };
 
