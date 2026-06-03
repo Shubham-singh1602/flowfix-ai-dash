@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Tactical Brutalism Void Palette */
+  --bg-void: #050508;
+  --bg-panel: #0a0c12;
+  --bg-raised: #0e1219;
+  --border-primary: #1c2333;
+  --border-glow: #1e3a5f;
+  
+  --text-primary: #c8d8e8;
+  --text-dim: #4a5a6a;
+  --text-data: #e2f0ff;
+  
+  /* Indicators */
+  --accent-cyan: #00d4ff;
+  --accent-amber: #ffaa00;
+  --accent-rose: #ff3355;
+  --accent-emerald: #00ff88;
+  --accent-violet: #7c3aed;
+}
+
+@layer base {
+  * {
+    border-color: var(--border-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.025em;
+    border-radius: 0px !important; /* STRICT brutalism: NO rounded corners */
+  }
+
+  /* Override inputs to have 2px max radius if needed by Shadcn, but let's keep it strictly 0px/2px */
+  input, select, button, textarea {
+    border-radius: 2px !important;
+  }
+
+  body {
+    background-color: var(--bg-void) !important;
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-image: none !important; /* Remove background hero image */
+  }
+
+  /* Monospace classes */
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+
+  .font-condensed {
+    font-family: 'Barlow Condensed', sans-serif !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+}
+
+/* Custom Tactical Panel Grid and Scanners */
+.panel-cell {
+  position: relative;
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-primary);
+  overflow: hidden;
+}
+
+/* Hardware-style scanline overlay (3px repeating linear gradient, 2% opacity) */
+.panel-cell::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(200, 216, 232, 0.02) 0px,
+    rgba(200, 216, 232, 0.02) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Blinking ACTIVE dot indicator */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.animate-blink {
+  animation: blink 1s step-start infinite;
+}
+
+/* Continuous alert ticker marquee */
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+.animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* EVP Active border-only pulse animation (no blur spread) */
+@keyframes border-pulse {
+  0%, 100% { border-color: var(--accent-rose); }
+  50% { border-color: var(--border-primary); }
+}
+.animate-border-pulse {
+  animation: border-pulse 600ms step-start infinite;
+}
+
+/* Staggered entry panels */
+@keyframes slide-up-reveal {
+  0% {
+    transform: translate3d(0, 8px, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+.panel-reveal {
+  animation: slide-up-reveal 240ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Range input customization for bare-bones slides */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+input[type="range"]:focus {
+  outline: none;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  background: var(--border-primary);
+}
+input[type="range"]::-webkit-slider-thumb {
+  height: 10px;
+  width: 10px;
+  border: 1px solid var(--border-primary);
+  background: var(--accent-cyan);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -4px;
+}
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  background: var(--border-primary);
+}
+input[type="range"]::-moz-range-thumb {
+  height: 10px;
+  width: 10px;
+  border: 1px solid var(--border-primary);
+  background: var(--accent-cyan);
+  cursor: pointer;
+}
